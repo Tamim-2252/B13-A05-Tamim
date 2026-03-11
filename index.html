@@ -31,34 +31,39 @@
 
 </head>
 
-<body>
-    <header>
-        <form id="login" class="flex justify-center items-center h-screen">
-            <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                <img src="./assets/github-logo.png" alt="">
-                <p>GitHub Issues Tracker</p>
-                <p>Sign in to manage your issues</p>
+<body class="bg-[#F8FAFC]">
+    <form id="signinForm" class="flex justify-center items-center h-screen ml-4 mr-4">
+        <fieldset class="fieldset w-sm  bg-white shadow-md rounded-lg sm:w-md p-8">
+            <div class="text-center">
+                <img class="mx-auto" src="./assets/github-logo.png" alt="">
+                <p class="font-semibold text-2xl text-[#1F2937] pt-6">GitHub Issues Tracker</p>
+                <p class="text-[#64748B] pb-6">Sign in to manage your issues</p>
+            </div>
 
-                <label class="label">Username</label>
-                <input type="text" class="input" placeholder="Enter Username" />
-                <p>Default: admin</p>
+            <label class="font-medium text-[#1F2937]">Username</label>
+            <input type="text" id="userName" class="input rounded-lg w-full" placeholder="Enter Username" />
+            <p class="text-[#4A00FF] text-xs">Default: admin</p>
 
-                <label class="label">Password</label>
-                <input type="password" class="input" placeholder="Enter Password" />
-                <p>Default: admin123</p>
+            <label class="font-medium text-[#1F2937] pt-4">Password</label>
+            <input type="password" id="password" class="input rounded-lg w-full" placeholder="Enter Password" />
+            <p class="text-[#4A00FF] text-xs">Default: admin123</p>
 
-                <button class="btn btn-primary mt-4">Sign In</button>
+            <button class="btn btn-primary mb-4 mt-4">Sign In</button>
 
-                <div class="flex justify-center items-center">
-                    <hr class="flex-1">
-                    <span>OR</span>
-                    <hr class="flex-1">
-                </div>
-            </fieldset>
-        </form>
+            <div class="flex justify-center items-center gap-2">
+                <hr class="flex-1 border border-[#E4E4E7]">
+                <span class="text-[#1F2937]">OR</span>
+                <hr class="flex-1 border border-[#E4E4E7]">
+            </div>
+            <p class="text-center text-[#64748B] text-sm mt-4 mb-2">Demo Credentials:</p>
+            <div class="rounded-lg bg-[#F8FAFC] text-[#1F2937] text-center p-4">
+                <p><span class="font-semibold">Username: </span>admin</p>
+                <p><span class="font-semibold">Password: </span>admin123</p>
+            </div>
+        </fieldset>
+    </form>
 
-    </header>
-
+    <script src="./script/login.js"></script>
 </body>
 
 </html>
