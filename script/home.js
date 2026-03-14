@@ -48,8 +48,50 @@ const cardStyle = {
     },
     closed: {
         border: "border-[#A855F7]",
-        img: "./assets/Closed-Status.png"
-    }
+        img: "./assets/Closed- Status .png"
+    },
+    high: {
+        color: "text-[#EF4444]",
+        bg: "bg-[#FEECEC]"
+    },
+    medium: {
+        color: "text-[#F59E0B]",
+        bg: "bg-[#FFF6D1]"
+    },
+    low: {
+        color: "text-[#9CA3AF]",
+        bg: "bg-[#EEEFF2]"
+    },
+    bug: `
+        <div class="w-fit py-1 px-2 bg-[#FEECEC] border border-[#FECACA] rounded-[100px] flex justify-center items-center">
+            <img class="size-3" src="./assets/BugDroid.png" alt="">
+            <p class=" text-[#EF4444] text-xs font-medium">BUG</p>
+        </div>
+    `,
+    "help wanted": `
+        <div class="w-fit py-1 px-2 bg-[#FFF8DB] border border-[#FDE68A] rounded-[100px] flex gap-0.3 justify-center items-center">
+            <img class="size-3" src="./assets/Lifebuoy.png" alt="">
+            <p class=" text-[#D97706] text-xs font-medium"> HELP WANTED</p>
+        </div>    
+    `,
+    "good first issue": `
+        <div class="w-fit py-1 px-2 bg-[#e5cafc] border border-[#caa7eb] rounded-[100px] flex gap-0.3 justify-center items-center">
+            <img class="size-[13px]" src="./assets/circle.png" alt="">
+            <p class=" text-[#9a3cf1] text-xs font-medium">GOOD FIRST ISSUE</p>
+        </div>    
+    `,
+    enhancement: `
+        <div class="w-fit py-1 px-2 bg-[#DEFCE8] border border-[#BBF7D0] rounded-[100px] flex justify-center items-center">
+            <img class="size-3" src="./assets/Sparkle.png" alt="">
+            <p class=" text-[#00A96E] text-xs font-medium">ENHANCEMENT</p>
+        </div>
+    `,
+    documentation: `
+        <div class="w-fit py-1 px-2 bg-[#EEEFF2] border border-[#d8dce8] rounded-[100px] flex justify-center items-center">
+            <img class="size-[13px]" src="./assets/file.png" alt="">
+            <p class=" text-[#7a88a3] text-xs font-medium">DOCUMENTATION</p>
+        </div>
+    `
 }
 
 
@@ -68,32 +110,27 @@ const displayIssue = (issues) => {
 
     issues.forEach(issue => {
 
-        const style = cardStyle[issue.status]
+        const statusStyle = cardStyle[issue.status];
+        const priorityStyle = cardStyle[issue.priority];
+        const labelStyle = issue.labels.map((label) => cardStyle[label]).join("");
 
         const card = document.createElement("div")
         card.innerHTML = `
 
-                <div id="card" class=" bg-white border-t-3 ${style.border} rounded shadow h-full">
+                <div id="card" class=" bg-white border-t-3 ${statusStyle.border} rounded shadow h-full">
                     <div class="p-4">
                         <div class="flex justify-between">
-                            <img src="./assets/Open-Status.png" alt="">
-                            <div class="w-20 bg-[#FEECEC] flex items-center justify-center rounded-[100px]">
-                                <p class=" text-[#EF4444] text-xs font-medium">${issue.priority.toUpperCase()}</p>
+                            <img src="${statusStyle.img}" alt="">
+                            <div class="w-20 ${priorityStyle.bg} flex items-center justify-center rounded-[100px]">
+                                <p class=" ${priorityStyle.color} text-xs font-medium">${issue.priority.toUpperCase()}</p>
                             </div>
                         </div>
                         <div class="pt-3 pb-3 space-y-2">
                             <p class="font-semibold text-sm text-[#1F2937]">${issue.title}</p>
                             <p class="text-xs text-[#64748B]">${issue.description}</p>
                         </div>
-                        <div class="flex gap-1">
-                            <div class="w-14 p-1 bg-[#FEECEC] border border-[#FECACA] rounded-[100px] flex justify-center items-center">
-                                <img class="size-3" src="./assets/BugDroid.png" alt="">
-                                <p class=" text-[#EF4444] text-xs font-medium">BUG</p>
-                            </div>
-                            <div class="w-28 p-1 bg-[#FFF8DB] border border-[#FDE68A] rounded-[100px] flex gap-0.3 justify-center items-center">
-                                <img class="size-3" src="./assets/Lifebuoy.png" alt="">
-                                <p class=" text-[#D97706] text-xs font-medium"> HELP WANTED</p>
-                            </div>
+                        <div id="labels" class="flex flex-wrap gap-1">
+                            ${labelStyle}
                         </div>
                     </div>
                     <hr class="border border-[#E4E4E7]">
@@ -102,7 +139,7 @@ const displayIssue = (issues) => {
                         <p>${issue.createdAt}</p>
                     </div>
                 </div>
-            
+
             `;
 
         cardContainer.append(card);
