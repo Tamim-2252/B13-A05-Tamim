@@ -54,15 +54,18 @@ const cardStyle = {
     },
     high: {
         color: "text-[#EF4444]",
-        bg: "bg-[#FEECEC]"
+        bg: "bg-[#FEECEC]",
+        modalBG: "bg-[#EF4444]"
     },
     medium: {
         color: "text-[#F59E0B]",
-        bg: "bg-[#FFF6D1]"
+        bg: "bg-[#FFF6D1]",
+        modalBG: "bg-[#F59E0B]"
     },
     low: {
         color: "text-[#9CA3AF]",
-        bg: "bg-[#EEEFF2]"
+        bg: "bg-[#EEEFF2]",
+        modalBG: "bg-[#9CA3AF]"
     },
     bug: `
         <div class="w-fit py-1 px-2 bg-[#FEECEC] border border-[#FECACA] rounded-[100px] flex justify-center items-center">
@@ -96,9 +99,63 @@ const cardStyle = {
     `
 }
 
+// load card details
+const loadCardDetail = (id) => {
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`
+    fetch(url)
+        .then((res) => res.json())
+        .then((json) => displayCardDetail(json.data));
+}
+
+// Displaying card deatails
+const displayCardDetail = (cardDetails) => {
+    // console.log(cardDetails);
+    const priorityStyle = cardStyle[cardDetails.priority];
+    const labelStyle = cardDetails.labels.map((label) => cardStyle[label]).join("");
+
+    const detailsCard = document.getElementById("details_modal");
+    detailsCard.innerHTML = `
+                <div class="modal-box bg-white rounded-xl p-8 shadow">
+                    <h3 class="text-2xl font-bold text-[#1F2937]">${cardDetails.title}</h3>
+                    <div class="flex pt-2 pb-6 gap-2 items-center">
+                        <div class="py-1.5 px-4 w-fit bg-[#00A96E] text-white font-medium text-xs rounded-[100px]">${cardDetails.status}</div>
+                        <div class="size-1 bg-[#64748B] rounded-full"></div>
+                        <p class="text-xs text-[#64748B]">Opened by ${cardDetails.author}</p>
+                        <div class="size-1 bg-[#64748B] rounded-full"></div>
+                        <p class="text-xs text-[#64748B]">${cardDetails.createdAt}</p>
+                    </div>
+
+                    <div id="labels" class="flex flex-wrap gap-1">
+                        ${labelStyle}
+                    </div>
+                    <p class="py-6 text-[#64748B]">${cardDetails.description}</p>
+
+                    <div class="grid grid-flow-col gap-2.5 p-4 bg-[#F8FAFC] rounded-lg">
+                        <div>
+                            <p class="text-[#64748B]">Assignee:</p>
+                            <p class="font-semibold text-[#1F2937]">${cardDetails.assignee}</p>
+                        </div>
+                        <div>
+                            <p class="text-[#64748B]">Priority:</p>
+                            <div class="py-1 px-3.5 w-fit ${priorityStyle.modalBG} text-white font-medium text-xs rounded-[100px]">${cardDetails.priority.toUpperCase()}</div>
+                        </div>
+                    </div>
+
+                    <div class="modal-action">
+                        <form method="dialog">
+                            <!-- if there is a button in form, it will close the modal -->
+                            <button class="btn btn-primary">Close</button>
+                        </form>
+                    </div>
+                </div>
+    `;
+
+    detailsCard.showModal();
+    
+}
 
 
-//  Displaying cards
+// load cards
 const loadIssue = () => {
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then((r) => r.json())
@@ -110,15 +167,16 @@ const filterCards = (data) => {
         return data;
     }
     else if (currentTab === "open") {
-      const openData =  data.filter(d => d.status === currentTab);
+        const openData = data.filter(d => d.status === currentTab);
         return openData;
     }
     else if (currentTab === "closed") {
-      const closedData =  data.filter(d => d.status === currentTab);
+        const closedData = data.filter(d => d.status === currentTab);
         return closedData;
     }
 }
 
+//  Displaying cards
 const displayIssue = (issues) => {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = ""
@@ -132,7 +190,7 @@ const displayIssue = (issues) => {
         const card = document.createElement("div")
         card.innerHTML = `
 
-                <div id="issue" data-status="${issue.status}" class=" card bg-white border-t-3 ${statusStyle.border} rounded shadow h-full">
+                <div id="${issue.id}" data-status="${issue.status}" class=" card bg-white border-t-3 ${statusStyle.border} rounded shadow h-full">
                     <div class="p-4">
                         <div class="flex justify-between">
                             <img src="${statusStyle.img}" alt="">
@@ -160,7 +218,7 @@ const displayIssue = (issues) => {
         cardContainer.append(card);
 
 
-// the code below when run shows the conditionsed card but shows empty space in other cards 
+        // the code below when run shows the conditionsed card but shows empty space in other cards 
         // const cards = document.querySelectorAll(".card")
         // cards.forEach(card => {
         //     if (currentTab === "all") {
@@ -187,7 +245,7 @@ document.getElementById("card-container").addEventListener("click", function (ev
     const card = clickedElement.closest(".card");
 
     if (card.classList.contains("card")) {
-        my_modal_5.showModal()
+        loadCardDetail(card.getAttribute("id"))
     }
 
 })
