@@ -1,13 +1,15 @@
-
+let currentTab = "all";
 
 const tabActive = ["bg-[#4A00FF]", "text-white", "font-semibold"]
 const tabInactive = ["bg-white", "border", "border-[#E4E4E7]", "text-[gray]", "font-medium",]
 
-// let currentTab = "all";
-//     currentTab = tab;
 
+
+// button function
 function switchTab(tab) {
+    currentTab = tab;
     const tabs = ["all", "open", "closed"]
+
     for (const t of tabs) {
         const tabName = document.getElementById(t);
         if (t === tab) {
@@ -96,17 +98,30 @@ const cardStyle = {
 
 
 
-//  Displaying card
+//  Displaying cards
 const loadIssue = () => {
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then((r) => r.json())
-        .then((json) => displayIssue(json.data));
+        .then((json) => displayIssue(filterCards(json.data)));
+}
+
+const filterCards = (data) => {
+    if (currentTab === "all") {
+        return data;
+    }
+    else if (currentTab === "open") {
+      const openData =  data.filter(d => d.status === currentTab);
+        return openData;
+    }
+    else if (currentTab === "closed") {
+      const closedData =  data.filter(d => d.status === currentTab);
+        return closedData;
+    }
 }
 
 const displayIssue = (issues) => {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = ""
-
 
     issues.forEach(issue => {
 
@@ -117,7 +132,7 @@ const displayIssue = (issues) => {
         const card = document.createElement("div")
         card.innerHTML = `
 
-                <div id="card" class=" bg-white border-t-3 ${statusStyle.border} rounded shadow h-full">
+                <div id="issue" data-status="${issue.status}" class=" card bg-white border-t-3 ${statusStyle.border} rounded shadow h-full">
                     <div class="p-4">
                         <div class="flex justify-between">
                             <img src="${statusStyle.img}" alt="">
@@ -143,9 +158,37 @@ const displayIssue = (issues) => {
             `;
 
         cardContainer.append(card);
+
+
+// the code below when run shows the conditionsed card but shows empty space in other cards 
+        // const cards = document.querySelectorAll(".card")
+        // cards.forEach(card => {
+        //     if (currentTab === "all") {
+        //         card.classList.remove("hidden")
+        //         // card.style.display = "none"
+        //     }
+        //     else if (card.getAttribute("data-status") === currentTab) {
+        //         card.style.display = "block"
+        //     }
+        //     else {
+        //         card.style.display = "none"
+        //     }
+        // });
+
     });
-
 }
-
-
 loadIssue();
+
+
+// display card details
+document.getElementById("card-container").addEventListener("click", function (event) {
+
+    const clickedElement = event.target;
+    const card = clickedElement.closest(".card");
+
+    if (card.classList.contains("card")) {
+        my_modal_5.showModal()
+    }
+
+})
+
