@@ -64,6 +64,7 @@
     </header>
 
     <main class="sm:w-[75%] mx-auto w-[94%] pb-15">
+
         <section id="button-section">
             <div class="flex  gap-2 bg-white p-6 shadow rounded-lg mb-4 mt-6 md:mt-15">
                 <button onclick="switchTab('all'); loadIssue();" id="all"
@@ -74,6 +75,7 @@
                     class=" bg-white border border-[#E4E4E7] text-[gray] w-28 h-9 rounded font-medium text-sm  hover:shadow-md">Closed</button>
             </div>
         </section>
+
         <section id="card-section" class="shadow  rounded-lg">
             <div class="flex justify-between gap-2 bg-white p-5.5 border-b border-[#E4E4E7] rounded-t-lg">
                 <div class="flex gap-2">
@@ -128,18 +130,47 @@
                 </div> -->
             </div>
         </section>
+
         <section id="modal">
             <!-- Open the modal using ID.showModal() method -->
-            <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
+            <button class="btn" onclick="my_modal_5.showModal()">open modal</button>
 
             <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-                <div class="modal-box">
-                    <h3 class="text-lg font-bold">Hello!</h3>
-                    <p class="py-4">Press ESC key or click the button below to close</p>
+                <div class="modal-box bg-white rounded-xl p-8 shadow">
+                    <h3 class="text-2xl font-bold text-[#1F2937]">Fix broken image uploads</h3>
+                    <div class="flex pt-2 pb-6 gap-2 items-center">
+                        <div class="py-1.5 px-4 w-fit bg-[#00A96E] text-white font-medium text-xs rounded-[100px]">Open
+                        </div>
+                        <div class="size-1 bg-[#64748B] rounded-full"></div>
+                        <p class="text-xs text-[#64748B]">Opened by Fahim Ahmed</p>
+                        <div class="size-1 bg-[#64748B] rounded-full"></div>
+                        <p class="text-xs text-[#64748B]">22/02/2026</p>
+                    </div>
+
+                    <div
+                        class="w-fit py-1 px-2 bg-[#FEECEC] border border-[#FECACA] rounded-[100px] flex justify-center items-center">
+                        <img class="size-3" src="./assets/BugDroid.png" alt="">
+                        <p class=" text-[#EF4444] text-xs font-medium">BUG</p>
+                    </div>
+                    <p class="py-6 text-[#64748B]">The navigation menu doesn't collapse properly on mobile devices. Need
+                        to fix the responsive behavior.</p>
+
+                    <div class="grid grid-flow-col gap-2.5 p-4 bg-[#F8FAFC] rounded-lg">
+                        <div>
+                            <p class="text-[#64748B]">Assignee:</p>
+                            <p class="font-semibold text-[#1F2937]">Fahim Ahmed</p>
+                        </div>
+                        <div>
+                            <p class="text-[#64748B]">Priority:</p>
+                            <div class="py-1 px-3.5 w-fit bg-[#EF4444] text-white font-medium text-xs rounded-[100px]">
+                                HIGH</div>
+                        </div>
+                    </div>
+
                     <div class="modal-action">
                         <form method="dialog">
                             <!-- if there is a button in form, it will close the modal -->
-                            <button class="btn">Close</button>
+                            <button class="btn btn-primary">Close</button>
                         </form>
                     </div>
                 </div>
