@@ -26,6 +26,17 @@ function switchTab(tab) {
     }
 }
 
+// spinner function
+const spinner = (status) => {
+    if (status === true) {
+        document.getElementById("spinner").classList.remove("hidden")
+        document.getElementById("card-container").classList.add("hidden")
+    } else {
+        document.getElementById("card-container").classList.remove("hidden")
+        document.getElementById("spinner").classList.add("hidden")
+    }
+}
+
 // calling deatals card
 document.getElementById("card-container").addEventListener("click", function (event) {
 
@@ -116,6 +127,7 @@ const cardStyle = {
 
 // load card details
 const loadCardDetail = (id) => {
+    spinner(true);
     const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`
     fetch(url)
         .then((res) => res.json())
@@ -166,12 +178,14 @@ const displayCardDetail = (cardDetails) => {
     `;
 
     detailsCard.showModal();
+    spinner(false);
 
 }
 
 
 // load cards
 const loadIssue = () => {
+    spinner(true);
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then((r) => r.json())
         .then((json) => displayIssue(filterCards(json.data)));
@@ -197,7 +211,7 @@ const displayIssue = (issues) => {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = ""
 
-// no issue card
+    // no issue card
     if (issues.length === 0) {
         count.children.length = 0;
         total.innerText = count.children.length;
@@ -211,7 +225,7 @@ const displayIssue = (issues) => {
         noIssue.classList.add("hidden");
     }
 
-// make the cards
+    // make the cards
     issues.forEach(issue => {
 
         const statusStyle = cardStyle[issue.status];
@@ -247,6 +261,7 @@ const displayIssue = (issues) => {
             `;
 
         cardContainer.append(card);
+        spinner(false);
 
         // counting issues
 
