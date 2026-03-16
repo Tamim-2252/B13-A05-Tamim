@@ -72,11 +72,13 @@ document.getElementById("card-container").addEventListener("click", function (ev
 const cardStyle = {
     open: {
         border: "border-[#00A96E]",
-        img: "./assets/Open-Status.png"
+        img: "./assets/Open-Status.png",
+        modalBG: "bg-[#00A96E]"
     },
     closed: {
         border: "border-[#A855F7]",
-        img: "./assets/Closed- Status .png"
+        img: "./assets/Closed- Status .png",
+        modalBG: "bg-[#A855F7]"
     },
     high: {
         color: "text-[#EF4444]",
@@ -138,6 +140,7 @@ const loadCardDetail = (id) => {
 const displayCardDetail = (cardDetails) => {
 
     const priorityStyle = cardStyle[cardDetails.priority];
+    const modalStatusStyle = cardStyle[cardDetails.status];
     const labelStyle = cardDetails.labels.map((label) => cardStyle[label]).join("");
 
     const detailsCard = document.getElementById("details_modal");
@@ -145,7 +148,7 @@ const displayCardDetail = (cardDetails) => {
                 <div class="modal-box bg-white rounded-xl p-8 shadow">
                     <h3 class="text-2xl font-bold text-[#1F2937]">${cardDetails.title}</h3>
                     <div class="flex pt-2 pb-6 gap-2 items-center">
-                        <div class="py-1.5 px-4 w-fit bg-[#00A96E] text-white font-medium text-xs rounded-[100px]">${cardDetails.status}</div>
+                        <div class="py-1.5 px-4 w-fit ${modalStatusStyle.modalBG} text-white font-medium text-xs rounded-[100px]">${cardDetails.status}</div>
                         <div class="size-1 bg-[#64748B] rounded-full"></div>
                         <p class="text-xs text-[#64748B]">Opened by ${cardDetails.author}</p>
                         <div class="size-1 bg-[#64748B] rounded-full"></div>
