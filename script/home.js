@@ -1,4 +1,7 @@
 let currentTab = "all";
+let total = document.getElementById("total");
+let count = document.getElementById("card-container");
+const noIssue = document.getElementById("no-issue");
 
 const tabActive = ["bg-[#4A00FF]", "text-white", "font-semibold"]
 const tabInactive = ["bg-white", "border", "border-[#E4E4E7]", "text-[gray]", "font-medium",]
@@ -22,6 +25,18 @@ function switchTab(tab) {
         }
     }
 }
+
+// calling deatals card
+document.getElementById("card-container").addEventListener("click", function (event) {
+
+    const clickedElement = event.target;
+    const card = clickedElement.closest(".card");
+
+    if (card.classList.contains("card")) {
+        loadCardDetail(card.getAttribute("id"))
+    }
+
+})
 
 
 /*  "data": [
@@ -109,7 +124,7 @@ const loadCardDetail = (id) => {
 
 // Displaying card deatails
 const displayCardDetail = (cardDetails) => {
-    // console.log(cardDetails);
+
     const priorityStyle = cardStyle[cardDetails.priority];
     const labelStyle = cardDetails.labels.map((label) => cardStyle[label]).join("");
 
@@ -151,7 +166,7 @@ const displayCardDetail = (cardDetails) => {
     `;
 
     detailsCard.showModal();
-    
+
 }
 
 
@@ -162,6 +177,7 @@ const loadIssue = () => {
         .then((json) => displayIssue(filterCards(json.data)));
 }
 
+// filter cards
 const filterCards = (data) => {
     if (currentTab === "all") {
         return data;
@@ -181,6 +197,21 @@ const displayIssue = (issues) => {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = ""
 
+// no issue card
+    if (issues.length === 0) {
+        count.children.length = 0;
+        total.innerText = count.children.length;
+
+
+        if (total.innerText < 1) {
+            noIssue.classList.remove("hidden");
+        }
+        return
+    } else {
+        noIssue.classList.add("hidden");
+    }
+
+// make the cards
     issues.forEach(issue => {
 
         const statusStyle = cardStyle[issue.status];
@@ -217,6 +248,20 @@ const displayIssue = (issues) => {
 
         cardContainer.append(card);
 
+        // counting issues
+
+        total.innerText = count.children.length;
+
+
+
+        // const noIssue = document.getElementById("no-issue");
+        // if (count < 1) {
+        //     noIssue.classList.remove("hidden");
+        // } else {
+        //     noIssue.classList.add("hidden");
+        // }
+
+
 
         // the code below when run shows the conditionsed card but shows empty space in other cards 
         // const cards = document.querySelectorAll(".card")
@@ -238,15 +283,32 @@ const displayIssue = (issues) => {
 loadIssue();
 
 
-// display card details
-document.getElementById("card-container").addEventListener("click", function (event) {
+// search function
+let searchValue = ""
+const input = document.getElementById("input-search");
+input.addEventListener("keydown", function (event) {
 
-    const clickedElement = event.target;
-    const card = clickedElement.closest(".card");
+    if (event.key === 'Enter') {
+        searchValue = input.value.trim().toLowerCase();
 
-    if (card.classList.contains("card")) {
-        loadCardDetail(card.getAttribute("id"))
+        fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+            .then((res) => res.json())
+            .then((data) => displayIssue(data.data))
     }
 
 })
+
+document.getElementById("search-icone").addEventListener("click", function (event) {
+
+    searchValue = input.value.trim().toLowerCase();
+
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+        .then((res) => res.json())
+        .then((data) => displayIssue(data.data))
+
+})
+
+
+
+
 

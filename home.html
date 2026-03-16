@@ -42,14 +42,14 @@
                 <div class="flex md:gap-4 gap-2">
                     <div class="flex items-center relative gap-2">
 
-                        <button class="btn btn-circle md:hidden mx-auto">
+                        <button class=" btn btn-circle md:hidden mx-auto">
                             <i class="fa-brands fa-sistrix "></i>
                         </button>
 
-                        <button class="md:absolute md:left-2 md:block hidden text-[#64748B] z-10 "> <i
+                        <button id="search-icone" class="md:absolute md:left-2 md:block hidden text-[#64748B] z-10 "> <i
                                 class="fa-brands fa-sistrix "></i></button>
-                        <input type="text" placeholder="Search issues..."
-                            class="input input-bordered border-[#E4E4E7] pl-8 w-24 md:w-auto hidden md:block focus:outline-none" />
+                        <input id="input-search" type="text" placeholder="Search issues..."
+                            class=" search input input-bordered border-[#E4E4E7] pl-8 w-24 md:w-auto hidden md:block focus:outline-none" />
                     </div>
                     <div>
                         <button class="btn btn-circle md:hidden mx-auto">
@@ -83,7 +83,7 @@
                         <img src="./assets/Aperture.png" alt="">
                     </div>
                     <div>
-                        <p class="font-semibold text-xl text-[#1F2937]"><span>50</span> Issues</p>
+                        <p class="font-semibold text-xl text-[#1F2937]"><span id="total">50</span> Issues</p>
                         <p class="text-[#64748B]">Track and manage your project issues</p>
                     </div>
                 </div>
@@ -136,6 +136,17 @@
             <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
             <dialog id="details_modal" class="modal modal-bottom sm:modal-middle">
             </dialog>
+        </section>
+
+        <section id="no-issue" class="hidden">
+            <div class="bg-white border border-[#F1F2F4] rounded-lg px-10 py-15 space-y-5 mb-32 hover:shadow-md">
+                <div class="flex justify-center">
+                    <img src="./assets/jobs.png" alt="">
+                </div>
+                <div class="text-center space-y-1">
+                    <p class="font-semibold text-2xl text-[#002C5C]">No issue available</p>
+                </div>
+            </div>
         </section>
     </main>
 
