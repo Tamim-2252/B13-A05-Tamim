@@ -9,10 +9,10 @@ ANS: var, let, and const is used in variable declaration.
 ANS: spread (...) is a oparator whice expands  arrays ,object or string to an individual element.it is used in cloning, merging or passing value.
 
 3️⃣ What is the difference between map(), filter(), and forEach()?
-ANS:
+ANS:map() method changes an arrey and returns the new array, filter() method filters an array with a condition and returns an array containing the values which have met the condition, forEach() method gives an array some effect or change but it does not return an array it returns undefined.
 
 4️⃣ What is an arrow function?
-ANS:
+ANS:an array function is a simple and smaller version of traditional functon. It has shorter syntax and used for simple function and callback.
 
 5️⃣ What are template literals?
-ANS:
+ANS: template literalas are javascript  string definied using bactics (`) insted of quotes ('). It allows advance manipulation using ${} syntax and tagged template. It also alows multi line creation whice enhance readability.
