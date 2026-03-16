@@ -306,9 +306,12 @@ input.addEventListener("keydown", function (event) {
     if (event.key === 'Enter') {
         searchValue = input.value.trim().toLowerCase();
 
-        fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
-            .then((res) => res.json())
-            .then((data) => displayIssue(data.data))
+        if (!searchValue == "") {
+            fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+                .then((res) => res.json())
+                .then((data) => displayIssue(data.data))
+        }
+
     }
 
 })
@@ -317,9 +320,28 @@ document.getElementById("search-icone").addEventListener("click", function (even
 
     searchValue = input.value.trim().toLowerCase();
 
-    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
-        .then((res) => res.json())
-        .then((data) => displayIssue(data.data))
+    if (!searchValue == "") {
+        fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+            .then((res) => res.json())
+            .then((data) => displayIssue(data.data))
+    }
+
+})
+
+//search for small device
+const dropdownInput = document.getElementById("dropdown-search");
+dropdownInput.addEventListener("keydown", function (event) {
+
+    if (event.key === 'Enter') {
+        searchValue = dropdownInput.value.trim().toLowerCase();
+
+        if (!searchValue == "") {
+            fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+                .then((res) => res.json())
+                .then((data) => displayIssue(data.data))
+        }
+
+    }
 
 })
 
